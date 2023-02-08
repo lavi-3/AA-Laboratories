@@ -131,8 +131,15 @@ def time_complexity6():
         end = timer()
         time6.append((end - start) * 1000)
     return time6
-
-
+# ----------------------------------------------------------------------------------
+# display the time complexity in a table
+table = pt.PrettyTable()
+table.field_names = ['n', 'fib1', 'fib2', 'fib3', 'fib4', 'fib5', 'fib6']
+for i in range(40):
+    table.add_row([i, time_complexity1()[i], time_complexity2()[i], time_complexity3()[i], time_complexity4()[i],
+                   time_complexity5()[i], time_complexity6()[i]])
+print(table)
+# ----------------------------------------------------------------------------------
 # display the time complexity in a graph
 dev_x = [i for i in range(100)]
 plt.xlabel('number of fibonacci numbers')

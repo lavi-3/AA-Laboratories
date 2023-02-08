@@ -69,72 +69,6 @@ def fib6(n):
 
 
 # ----------------------------------------------------------------------------------
-
-
-# # calculate the time complexity for each function and muliply by 1000 to get the time in milliseconds
-# def time_complexity():
-#     time1 = []
-#     time2 = []
-#     time3 = []
-#     time4 = []
-#     time5 = []
-#     time6 = []
-#     for i in range(100):
-#         start = time.time()
-#         fib1(i)
-#         end = time.time()
-#         time1.append((end - start) * 1000)
-#         start = time.time()
-#         fib2(i)
-#         end = time.time()
-#         time2.append((end - start) * 1000)
-#         start = time.time()
-#         fib3(i)
-#         end = time.time()
-#         time3.append((end - start) * 1000)
-#         start = time.time()
-#         fib4(i)
-#         end = time.time()
-#         time4.append((end - start) * 1000)
-#         start = time.time()
-#         fib5(i)
-#         end = time.time()
-#         time5.append((end - start) * 1000)
-#         start = time.time()
-#         fib6(i)
-#         end = time.time()
-#         time6.append((end - start) * 1000)
-#     return time1, time2, time3, time4, time5, time6
-#
-#
-# # ----------------------------------------------------------------------------------
-#
-# # create a matrix to store the time complexity
-# time1, time2, time3, time4, time5, time6 = time_complexity()
-# time_complexity = np.array([time1, time2, time3, time4, time5, time6])
-# # display the time complexity in a table
-# print(time_complexity)
-#
-# # display the time complexity in a graph
-# dev_x = [i for i in range(100)]
-# plt.xlabel('number of fibonacci numbers')
-# dev_y = time_complexity[0]
-# plt.ylabel('time complexity, ms')
-# plt.plot(dev_x, dev_y, label='fib1')
-# dev_y = time_complexity[1]
-# plt.plot(dev_x, dev_y, label='fib2')
-# dev_y = time_complexity[2]
-# plt.plot(dev_x, dev_y, label='fib3')
-# dev_y = time_complexity[3]
-# plt.plot(dev_x, dev_y, label='fib4')
-# dev_y = time_complexity[4]
-# plt.plot(dev_x, dev_y, label='fib5')
-# dev_y = time_complexity[5]
-# plt.plot(dev_x, dev_y, label='fib6')
-# plt.legend()
-# plt.show()
-
-
 #calculate the time complexity for the first function
 def time_complexity1():
     time1 = []
@@ -208,8 +142,3 @@ dev_y = time_complexity6()
 plt.plot(dev_x, dev_y, label='fib6')
 plt.legend()
 plt.show()
-
-
-
-
-

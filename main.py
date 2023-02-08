@@ -1,6 +1,6 @@
 from timeit import default_timer as timer
 from matplotlib import pyplot as plt
-import numpy as np
+import prettytable as pt
 
 
 # fibonacci number using golden ratio

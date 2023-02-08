@@ -1,13 +1,12 @@
-import time
+from timeit import default_timer as timer
 from matplotlib import pyplot as plt
 import numpy as np
 
 
 # fibonacci number using golden ratio
 def fib1(n):
-    from math import sqrt
-    return int(((1 + sqrt(5)) ** n - (1 - sqrt(5)) ** n) / (2 ** n * sqrt(5)))
-
+    golden_ratio = (1 + 5 ** 0.5) / 2
+    return int((golden_ratio ** n - (-golden_ratio) ** (-n)) / 5 ** 0.5)
 
 
 # fibonacci number using iteration
@@ -29,7 +28,6 @@ def fib3(n):
         for i in range(2, n + 1):
             fib = [fib[1], fib[0] + fib[1]]
         return fib[1]
-
 
 
 # fibonacci number using matrix multiplication
@@ -69,62 +67,73 @@ def fib6(n):
 
 
 # ----------------------------------------------------------------------------------
-#calculate the time complexity for the first function
+# calculate the time required to execute the first function
 def time_complexity1():
     time1 = []
     for i in range(100):
-        start = time.time()
+        start = timer()
         fib1(i)
-        end = time.time()
+        end = timer()
         time1.append((end - start) * 1000)
     return time1
-#calculate the time complexity for the second function
+
+
+# calculate the time required to execute the second function
 def time_complexity2():
     time2 = []
     for i in range(100):
-        start = time.time()
+        start = timer()
         fib2(i)
-        end = time.time()
+        end = timer()
         time2.append((end - start) * 1000)
     return time2
-#calculate the time complexity for the third function
+
+
+# calculate the time required to execute the third function
 def time_complexity3():
     time3 = []
     for i in range(100):
-        start = time.time()
+        start = timer()
         fib3(i)
-        end = time.time()
+        end = timer()
         time3.append((end - start) * 1000)
     return time3
-#calculate the time complexity for the fourth function
+
+
+# calculate the time required to execute the fourth function
 def time_complexity4():
     time4 = []
     for i in range(100):
-        start = time.time()
+        start = timer()
         fib4(i)
-        end = time.time()
+        end = timer()
         time4.append((end - start) * 1000)
     return time4
-#calculate the time complexity for the fifth function
+
+
+# calculate the time required to execute the fifth function
 def time_complexity5():
     time5 = []
     for i in range(100):
-        start = time.time()
+        start = timer()
         fib5(i)
-        end = time.time()
+        end = timer()
         time5.append((end - start) * 1000)
     return time5
-#calculate the time complexity for the sixth function
+
+
+# calculate the time required to execute the sixth function
 def time_complexity6():
     time6 = []
     for i in range(100):
-        start = time.time()
+        start = timer()
         fib6(i)
-        end = time.time()
+        end = timer()
         time6.append((end - start) * 1000)
     return time6
 
-#display the time complexity in a graph
+
+# display the time complexity in a graph
 dev_x = [i for i in range(100)]
 plt.xlabel('number of fibonacci numbers')
 dev_y = time_complexity1()

@@ -1,160 +1,118 @@
-from timeit import default_timer as timer
-from matplotlib import pyplot as plt
-import prettytable as pt
+from math import sqrt
+import timeit
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-# fibonacci number using golden ratio
-def fib1(n):
-    golden_ratio = (1 + 5 ** 0.5) / 2
-    return int((golden_ratio ** n - (-golden_ratio) ** (-n)) / 5 ** 0.5)
+def sieve1(n):
+    c = [False] * (n + 1)
+    c[1] = False
+    i = 2
+    while i <= n:
+        if c[i] == True:
+            j = 2 * i
+            while j <= n:
+                c[j] = False
+                j = j + i
+        i = i + 1
 
 
-# fibonacci number using iteration
-def fib2(n):
-    a, b = 0, 1
-    for i in range(n):
-        a, b = b, a + b
-    return a
+def sieve2(n):
+    c = [False] * (n + 1)
+    c[1] = False
+    i = 2
+    while i <= n:
+        j = 2 * i
+        while j <= n:
+            c[j] = False
+            j = j + i
+        i = i + 1
 
 
-# fibonacci number using fast doubling
-def fib3(n):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        fib = [0, 1]
-        for i in range(2, n + 1):
-            fib = [fib[1], fib[0] + fib[1]]
-        return fib[1]
+def brute(n):
+    c = [False] * (n + 1)
+    c[1] = False
+    i = 2
+    while i <= n:
+        if c[i] == True:
+            j = i + 1
+            while j <= n:
+                if j % i == 0:
+                    c[j] = False
+                j = j + 1
+        i = i + 1
 
 
-# fibonacci number using matrix multiplication
-def fib4(n):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        fib = [[1, 1], [1, 0]]
-        for i in range(2, n + 1):
-            fib = [[fib[0][0] + fib[0][1], fib[0][0]], [fib[0][0], 0]]
-        return fib[0][0]
+def trialdiv(n):
+    c = [False] * (n + 1)
+    c[1] = False
+    i = 2
+    while i <= n:
+        j = 1
+        while j < i:
+            if i % j == 0:
+                c[i] = False
+            j = j + 1
+        i = i + 1
 
 
-# fibonacci number using dynamic programming
-def fib5(n):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        fib = [0, 1]
-        for i in range(2, n + 1):
-            fib.append(fib[i - 1] + fib[i - 2])
-        return fib[n]
+def trialdiv_optimized(n):
+    arr = [True] * (n + 1)
+    arr[1] = False
+    i = 2
+
+    while i <= n:
+        j = 2
+        while j <= int(sqrt(i)):
+            if i % j == 0:
+                arr[i] = False
+                break
+            j += 1
+        i += 1
 
 
-# fibonacci number using recursion
-def fib6(n):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        return fib1(n - 1) + fib1(n - 2)
+# ------------------------------------------------------------------------
+prime_algorithms = [
+    {
+        "name": "Sieve of Eratosthenes 1",
+        "primes": lambda n: sieve1(n)
+    },
+    {
+        "name": "Sieve of Eratosthenes 2",
+        "primes": lambda n: sieve2(n)
+    },
+    {
+        "name": "Brute algorithm",
+        "primes": lambda n: brute(n)
+    },
+    {
+        "name": "Trial division",
+        "primes": lambda n: trialdiv(n)
+    },
+    {
+        "name": "Trial division optimized",
+        "primes": lambda n: trialdiv_optimized(n)
+    }
+]
 
+elements = np.array([i * 100 for i in range(1, 50)])
 
-# ----------------------------------------------------------------------------------
-# calculate the time required to execute the first function
-def time_complexity1():
-    time1 = []
-    for i in range(100):
-        start = timer()
-        fib1(i)
-        end = timer()
-        time1.append((end - start) * 1000)
-    return time1
+for alg in prime_algorithms:
+    times = list()
+    start_time = timeit.default_timer()
+    for i in range(1, 50):
+        start_alg = timeit.default_timer()
+        num = i * 100
+        alg["primes"](num)
+        end_alg = timeit.default_timer()
+        times.append(end_alg - start_alg)
+        print(alg["name"], "Calculated ", i * 1000, "Primes in ", end_alg - start_alg, "s")
 
+    end_time = timeit.default_timer()
+    print(alg["name"], "Calculated all Primes in", end_time - start_time, "s")
 
-# calculate the time required to execute the second function
-def time_complexity2():
-    time2 = []
-    for i in range(100):
-        start = timer()
-        fib2(i)
-        end = timer()
-        time2.append((end - start) * 1000)
-    return time2
+    plt.plot(elements, times, label=alg["name"])
 
-
-# calculate the time required to execute the third function
-def time_complexity3():
-    time3 = []
-    for i in range(100):
-        start = timer()
-        fib3(i)
-        end = timer()
-        time3.append((end - start) * 1000)
-    return time3
-
-
-# calculate the time required to execute the fourth function
-def time_complexity4():
-    time4 = []
-    for i in range(100):
-        start = timer()
-        fib4(i)
-        end = timer()
-        time4.append((end - start) * 1000)
-    return time4
-
-
-# calculate the time required to execute the fifth function
-def time_complexity5():
-    time5 = []
-    for i in range(100):
-        start = timer()
-        fib5(i)
-        end = timer()
-        time5.append((end - start) * 1000)
-    return time5
-
-
-# calculate the time required to execute the sixth function
-def time_complexity6():
-    time6 = []
-    for i in range(100):
-        start = timer()
-        fib6(i)
-        end = timer()
-        time6.append((end - start) * 1000)
-    return time6
-# ----------------------------------------------------------------------------------
-# display the time complexity in a table
-table = pt.PrettyTable()
-table.field_names = ['n', 'fib1', 'fib2', 'fib3', 'fib4', 'fib5', 'fib6']
-for i in range(40):
-    table.add_row([i, time_complexity1()[i], time_complexity2()[i], time_complexity3()[i], time_complexity4()[i],
-                   time_complexity5()[i], time_complexity6()[i]])
-print(table)
-# ----------------------------------------------------------------------------------
-# display the time complexity in a graph
-dev_x = [i for i in range(100)]
-plt.xlabel('number of fibonacci numbers')
-dev_y = time_complexity1()
-plt.ylabel('time complexity, ms')
-plt.plot(dev_x, dev_y, label='fib1')
-dev_y = time_complexity2()
-plt.plot(dev_x, dev_y, label='fib2')
-dev_y = time_complexity3()
-plt.plot(dev_x, dev_y, label='fib3')
-dev_y = time_complexity4()
-plt.plot(dev_x, dev_y, label='fib4')
-dev_y = time_complexity5()
-plt.plot(dev_x, dev_y, label='fib5')
-dev_y = time_complexity6()
-plt.plot(dev_x, dev_y, label='fib6')
+plt.grid()
 plt.legend()
 plt.show()

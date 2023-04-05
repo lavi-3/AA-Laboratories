@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import scipy as sp
 
 # Define the number of nodes
-num_nodes = random.randint(8, 31)
+num_nodes = random.randint(8, 15)
 
 # Create the balanced tree
 balanced_tree = nx.balanced_tree(2, int(num_nodes/2)-1)
